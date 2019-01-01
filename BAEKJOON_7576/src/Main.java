@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Main {
 	static int M,N;
 	static int[][] tomatos;
+	static boolean[][] visited;
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		System.setIn(new FileInputStream("res/input.txt"));
@@ -18,11 +19,13 @@ public class Main {
 		N = sc.nextInt();
 		
 		tomatos = new int[N][M];
+		visited = new boolean[N][M];
 		
 		LinkedList<pair> pos = new LinkedList<>();
 		
 		for (int i=0;i<N;i++) {
 			for (int k=0;k<M;k++) {
+				visited[i][k] = false;
 				tomatos[i][k] = sc.nextInt();
 				if (tomatos[i][k] == 1) {
 					pos.add(new pair(k, i));
@@ -30,48 +33,49 @@ public class Main {
 			}
 		}
 		
-		for (pair e : pos) {
-			bfs(e.x, e.y);
-		}
+		bfs(tomatos);
 		
 		System.out.println(getMaxDate());
 		
 	}
 	
 	static int getMaxDate() {
-		int max = -1;
-		for (int i=0;i<N;i++) {
-			for (int k=0;k<M;k++) {
-				
-				if (tomatos[i][k] == 0) {
-					return -1;
-				} else if (tomatos[i][k] > max){
-					max = tomatos[i][k]; 
-				}
-			}
-		}
-		return max -1;
+		int max = 0;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (tomatos[i][j] == 0) {
+                    //토마토가 모두 익지 못한 상황이라면 -1 을 출력한다.
+                    return -1;
+                }
+                max = Math.max(max, tomatos[i][j]);
+            }
+        }
+        //그렇지 않다면 최대값을 출력한다.
+        return max-1;
 	}
 	
-	static void bfs (int a, int b) {
+	static void bfs(int[][] matrix) {
 		int[] x_pos = {-1, 0, 0, 1};
 		int[] y_pos = {0, -1, 1, 0};
 		
 		Queue<pair> queue = new LinkedList<>();
-		queue.offer(new pair(a, b));
-		
+		for (int i=0;i<N;i++) {
+			for (int j=0;j<M;j++) {
+				if (tomatos[i][j] == 1) {
+					queue.add(new pair(j,i));
+				}
+			}
+		}
 		while(!queue.isEmpty()) {
-			pair p = queue.poll();
-			int x = p.x;
-			int y = p.y;
-			
+			pair current = queue.poll();
 			for (int j=0;j<4;j++) {
-				int ay = y + y_pos[j];
-				int ax = x + x_pos[j];
+				int ay = current.y + y_pos[j];
+				int ax = current.x + x_pos[j];
 				if (ax >= 0 && ax < M && ay >= 0 && ay < N) {
-					if (tomatos[ay][ax] == 0 || tomatos[y][x] + 1 < tomatos[ay][ax]) {
-						tomatos[ay][ax] = tomatos[y][x] + 1;
+					if (tomatos[ay][ax] == 0) {
+						tomatos[ay][ax] = tomatos[current.y][current.x] + 1;
 						queue.offer(new pair(ax, ay));
+						visited[ay][ax] = true;
 					}
 				}
 			}
