@@ -37,15 +37,17 @@ public class Main {
 			int a = sc.nextInt();
 			int b = sc.nextInt();
 			int c = sc.nextInt();
-			
-			dist[a][b] = c;
+			//아래 소스 코드가 제일 중요
+			dist[a][b] = Math.min(dist[a][b], c);
+//			dist[a][b] = c;
 		}
-		
 		
 		for (int k = 1;k<=n;k++) {
 			for (int i=1;i<=n;i++) {
 				for (int j=1;j<=n;j++) {
-					dist[i][j] =  Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+					if (dist[i][j] > dist[i][k] + dist[k][j]) {
+						dist[i][j] = dist[i][k] + dist[k][j];
+					}
 				}
 			}
 		}

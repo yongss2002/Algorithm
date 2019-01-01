@@ -54,7 +54,7 @@ public class Main {
 		if (totalTime == -1) {
 			for (int i=1;i<=N;i++) {
 				if (order[i][destination] == 1) {
-					time = max(time, getMinimumTime(i));
+					time = Math.max(time, getMinimumTime(i));
 				}
 			}
 			memoization[destination] = totalTime = time + buildTime[destination];
@@ -63,12 +63,5 @@ public class Main {
 		return totalTime;
 	}
 	
-	public static int max (int a, int b) {
-		if (a>b) {
-			return a;
-		} else {
-			return b;
-		}
-	}
 	
 }
