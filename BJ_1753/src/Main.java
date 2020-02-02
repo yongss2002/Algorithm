@@ -1,10 +1,14 @@
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 
 public class Main {
@@ -14,14 +18,15 @@ public class Main {
 	static boolean[] visited;
 	static ArrayList<Pair>[] adj;
 	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream("res/input.txt"));
 		
-		Scanner sc = new Scanner(System.in);
-		
-		V = sc.nextInt();
-		E = sc.nextInt();
-		K = sc.nextInt();
+		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(sc.readLine());
+		V = Integer.parseInt(st.nextToken());
+		E = Integer.parseInt(st.nextToken());
+		st = new StringTokenizer(sc.readLine());
+		K = Integer.parseInt(st.nextToken());
 		
 		dist = new int[V+1];
 		visited = new boolean[V+1];
@@ -37,9 +42,10 @@ public class Main {
 		
 		for (int i=0;i<E;i++) {
 			int u, v, w;
-			u = sc.nextInt();
-			v = sc.nextInt();
-			w = sc.nextInt();
+			st = new StringTokenizer(sc.readLine());
+			u = Integer.parseInt(st.nextToken());
+			v = Integer.parseInt(st.nextToken());
+			w = Integer.parseInt(st.nextToken());
 			adj[u].add(new Pair(v, w));
 		}
 		

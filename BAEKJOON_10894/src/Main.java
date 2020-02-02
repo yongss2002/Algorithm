@@ -30,7 +30,6 @@ public class Main {
 				// TODO Auto-generated method stub
 				return o1.cost - o2.cost;
 			}
-			
 		});
 		
 		for (int i=0;i<E;i++) {

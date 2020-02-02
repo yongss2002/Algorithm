@@ -1,9 +1,15 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
 
@@ -13,12 +19,13 @@ public class Main {
 	static int[][] dist;
 	static int INF = 1000000000;
 			
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		System.setIn(new FileInputStream("res/input.txt"));
-		Scanner sc = new Scanner(System.in);
+		BufferedReader sc = new BufferedReader(new InputStreamReader(System.in));    
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
-		n = sc.nextInt();
-		m = sc.nextInt();
+		n = Integer.parseInt(sc.readLine());
+		m = Integer.parseInt(sc.readLine());
 		
 		dist = new int[n+1][n+1];
 		
@@ -34,9 +41,11 @@ public class Main {
 		}
 		
 		for (int i = 0; i < m; i++) {
-			int a = sc.nextInt();
-			int b = sc.nextInt();
-			int c = sc.nextInt();
+			StringTokenizer st = new StringTokenizer(sc.readLine());
+			
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
 			//아래 소스 코드가 제일 중요
 			dist[a][b] = Math.min(dist[a][b], c);
 //			dist[a][b] = c;
