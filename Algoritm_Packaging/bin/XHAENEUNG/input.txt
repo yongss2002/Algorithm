@@ -1,3 +1,0 @@
-2
-two + three = ivef
-zero * zero = one
